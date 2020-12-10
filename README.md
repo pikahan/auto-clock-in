@@ -29,6 +29,12 @@ node index.js
 
 ```
 
+如果要后台运行的话建议安装pm2
+``` bash
+yarn global add pm2
+pm2 start index.js
+```
+
 
 ## TODO
 - [x] 定时任务
