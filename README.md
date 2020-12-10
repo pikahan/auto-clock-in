@@ -1,6 +1,6 @@
 ## 使用
 
-index同级目录下创建一个`config.json`, 里面填入账号以及密码
+index.js同级目录下创建一个`config.json`, 里面填入账号以及密码
 
 > 例子
 
