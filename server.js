@@ -1,0 +1,71 @@
+const puppeteer = require('puppeteer')
+const fs = require('fs')
+const path = require('path')
+const iPhone = puppeteer.devices['iPhone 6']
+const userInfo = {
+  username: process.argv[2],
+  password: process.argv[3]
+}
+
+;(async () => {
+  const browser = await puppeteer.launch({headless: true, args:['--no-sandbox']})
+  const page = await browser.newPage()
+  await page.emulate(iPhone)
+  await page.goto('http://yqdj.zucc.edu.cn/feiyan_api/h5/html/daka/daka.html')
+
+  let res = await page.evaluate((userInfo) => {
+    const userNameInput = document.getElementById('username')
+    const passwordInput = document.getElementById('password')
+    if (!userInfo.password || !userInfo.username) {
+      return { err: '请输入用户名或密码' }
+    }
+    userNameInput.value = userInfo.username
+    passwordInput.value = userInfo.password
+  }, userInfo)
+
+  if (res && typeof res.err !== 'undefined') {
+    console.error(res.err)
+    await browser.close()
+    return
+  }
+
+  await page.click('button')
+  await page.waitForNavigation( { waitUntil: "networkidle0" } )
+  res = await page.evaluate(() => {
+    const list = document.querySelectorAll('.question-item.required')
+    if (list.length === 0) {
+      return {
+        err: '已经提交'
+      }
+    }
+    let restList = [].slice.call(list, 2)
+    // 目标所在地填充
+    list[1].querySelector('input').value = '校内 校内 校内'
+
+    restList.forEach(item => {
+      const optionList = item.querySelectorAll('.option-item')
+      let falsyOption = optionList[optionList.length-1].querySelector('input')
+      if (falsyOption.value.indexOf('否') === -1) {
+
+        // TODO: 校验功能
+        falsyOption = optionList[0].querySelector('input')
+      }
+      falsyOption.checked = true
+    })
+  })
+  if (res && typeof res.err !== 'undefined') {
+    console.error(res.err)
+    await browser.close()
+    return
+  }
+
+  await page.click('.content-block.submit-box')
+  await browser.close()
+})()
+
+// let file = path.resolve(__dirname, './file.txt')
+// let data = {
+//   a: 1
+// }
+// // 异步写入数据到文件
+// fs.writeFile(file, JSON.stringify(data, null, 4), { encoding: 'utf8' }, err => {})
