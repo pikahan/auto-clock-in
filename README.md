@@ -28,3 +28,8 @@ index同级目录下创建一个`config.json`, 里面填入账号以及密码
 node index.js
 
 ```
+
+
+## TODO
+- 自定义选项配置
+- 选项变更后邮件提醒
