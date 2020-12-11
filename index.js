@@ -29,8 +29,8 @@ if (process.argv[2] === '--start') { // 立即执行
   task();
 } else {
   rule.dayOfWeek = [new schedule.Range(0, 6)];
-  rule.hour = config.hour;
-  rule.minute = config.minute;
+  rule.hour = typeof config.hour === 'undefined' ? 10 : config.hour;
+  rule.minute = typeof config.minute === 'undefined' ? 0 : config.minute;
   schedule.scheduleJob(rule, () => {
     task();
   })
