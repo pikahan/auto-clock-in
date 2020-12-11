@@ -75,7 +75,7 @@ node index.js
 node index.js --start
 ```
 
-如果要后台运行的话建议安装pm2
+## 如果要后台运行的话建议安装pm2
 ``` bash
 yarn global add pm2
 pm2 start index.js
