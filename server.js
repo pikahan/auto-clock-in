@@ -1,13 +1,10 @@
 const puppeteer = require('puppeteer')
-const fs = require('fs')
-const path = require('path')
 const iPhone = puppeteer.devices['iPhone 6']
 const userInfo = {
   username: process.argv[2],
   password: process.argv[3]
 }
-
-;(async () => {
+const task = async () => {
   const browser = await puppeteer.launch({headless: true, args:['--no-sandbox']})
   const page = await browser.newPage()
   await page.emulate(iPhone)
@@ -35,7 +32,7 @@ const userInfo = {
     const list = document.querySelectorAll('.question-item.required')
     if (list.length === 0) {
       return {
-        err: '已经提交'
+        err: '打卡失败, 今天已经提交'
       }
     }
     let restList = [].slice.call(list, 2)
@@ -53,19 +50,18 @@ const userInfo = {
       falsyOption.checked = true
     })
   })
+  let ret = `账号: ${userInfo.username} `;
   if (res && typeof res.err !== 'undefined') {
-    console.error(res.err)
     await browser.close()
-    return
+    return ret + res.err;
   }
 
   await page.click('.content-block.submit-box')
   await browser.close()
-})()
+  return ret + '打卡成功!';
+}
 
-// let file = path.resolve(__dirname, './file.txt')
-// let data = {
-//   a: 1
-// }
-// // 异步写入数据到文件
-// fs.writeFile(file, JSON.stringify(data, null, 4), { encoding: 'utf8' }, err => {})
+process.on('message', async () => {
+  const res = await task();
+  process.send(res);
+})
