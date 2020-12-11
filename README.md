@@ -24,7 +24,7 @@ index.js同级目录下创建一个`config.json`, 里面填入账号以及密码
 ```
 
 ### 微信通知
-[http://sc.ftqq.com/3.version](Server酱)获取 SCKEY
+[Server酱](http://sc.ftqq.com/3.version)获取 SCKEY
 
 拿到的 SCKEY 填入配置中
 
