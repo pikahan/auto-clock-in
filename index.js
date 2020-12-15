@@ -9,6 +9,7 @@ const task = () => {
     const child = childProcess.fork(__dirname + '/server.js', [userData.username, userData.password]);
     child.send('start');
     child.on('message', msg => {
+      console.log(msg);
       const SCKEY = userData.SCKEY || config.SCKEY || null;
       if (SCKEY) {
         axios.get(`https://sc.ftqq.com/${SCKEY}.send`, {
@@ -19,7 +20,7 @@ const task = () => {
           child.disconnect();
         })
       } else {
-        child.disconnect()
+        child.disconnect();
       }
     })
   }

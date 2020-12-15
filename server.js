@@ -4,6 +4,7 @@ const userInfo = {
   username: process.argv[2],
   password: process.argv[3]
 }
+console.log('开始给 ' + userInfo.username + ' 打卡');
 const task = async () => {
   const browser = await puppeteer.launch({headless: true, args:['--no-sandbox']})
   const page = await browser.newPage()
