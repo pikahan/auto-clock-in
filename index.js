@@ -71,7 +71,7 @@ const task = async () => {
   if (SCKEY) {
     axios.get(`https://sc.ftqq.com/${SCKEY}.send`, {
       params: {
-        text: msg,
+        text: res,
       }
     });
   }
