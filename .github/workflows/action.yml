@@ -1,0 +1,42 @@
+name: 'ZUCC'
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: macos-latest
+    env:
+      TZ: Asia/Shanghai
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: pikahan/auto-clock-in
+          ref: master
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: main
+        env:
+          SCKEY: ${{ secrets.SCKEY }}
+          USERNAME: ${{ secrets.username }}
+          PASSWORD: ${{ secrets.password }}
+        run: |
+          node ./index.js
