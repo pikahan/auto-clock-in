@@ -1,88 +1,24 @@
 ## 使用
 
-index.js同级目录下创建一个`config.json`, 里面填入账号以及密码
-
-> 例子
-
-``` json
-{
-  "userInfo": [
-    {
-      "username": "31701000",
-      "password": "123321"
-    },
-    {
-      "username": "31701001",
-      "password": "123321"
-    },
-    {
-      "username": "31701002",
-      "password": "123321"
-    }
-  ]
-}
-```
-
-### 微信通知
-[Server酱](http://sc.ftqq.com/3.version)获取 SCKEY
-
-拿到的 SCKEY 填入配置中
-
-``` json
-{
-  "userInfo": [
-    {
-      "username": "31701000",
-      "password": "123321",
-      "SCKEY": "TESTTESTTEST"
-    },
-    {
-      "username": "31701001",
-      "password": "123321"
-    },
-    {
-      "username": "31701002",
-      "password": "123321"
-    }
-  ]
-}
-
-```
+1. `Fork`本仓库(顺便来个星星吧)
+2. 在`Settings -> Secrets`中添加相应的账户信息, 见下表
 
 
-### 定时任务运行
+|Secrets Name|Value|Remark
+|---|---|---|
+|USERNAME|填写你的学号|
+|PASSWORD|填写你的密码(身份证后6位)|
+|SCKEY|Server酱提供的微信通知, 可不填|[Server酱](http://sc.ftqq.com/3.version)获取 SCKEY
 
-在配置中填入要打卡的时间点, hour 和 minute 对应每天的几点几分进行打卡, 不填写默认每天10点整运行
-``` json
-{
-  "userInfo": [],
-  "hour": 10,
-  "minute": 0
-}
+![step2](./img/step2.png)
 
-```
+3. 开启Actions
 
-
-``` bash
-node index.js
-
-```
-
-### 立即运行
-
-立即运行, 直接进行打卡
-``` bash
-node index.js --start
-```
-
-## 如果要后台运行的话建议安装pm2
-``` bash
-yarn global add pm2
-pm2 start index.js
-```
+![step3.1](./img/step3.1.png)
+![step3.2](./img/step3.2.png)
+![step3.3](./img/step3.3.png)
 
 
 ## TODO
-- [x] 定时任务
 - [ ] 自定义选项配置
-- [ ] 选项变更后邮件提醒
+- [ ] 选项变更后提醒
