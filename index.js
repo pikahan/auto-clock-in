@@ -72,7 +72,11 @@ const task = async () => {
   axios.post(`https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${process.env.QWKEY}`, {
     msgtype: 'text',
     text: {
-      content: '今日打卡成功'
+      content: `${process.env.USERNAME} 今日打卡成功`
     }
-  });
+  }).then(() => {
+    console.log('推送成功')
+  }).catch((e) => {
+    console.log('推送失败', JSON.stringify(e))
+  })
 })();
