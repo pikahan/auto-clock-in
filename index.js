@@ -9,6 +9,11 @@ console.log('开始给 ' + userInfo.username + ' 打卡');
 const task = async () => {
   const browser = await puppeteer.launch({headless: true, args:['--no-sandbox']});
   const page = await browser.newPage();
+  await new Promise((r) => {
+    setTimeout(() => {
+      r();
+    }, Math.floor(Math.random() * 1000 * 60 * 20))
+  })
   await page.emulate(iPhone);
   await page.goto('http://yqdj.zucc.edu.cn/feiyan_api/h5/html/daka/daka.html');
 
