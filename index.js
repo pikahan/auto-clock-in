@@ -63,12 +63,25 @@ const task = async () => {
 }
 
 (async () => {
-  // await new Promise((r) => {
-  //   setTimeout(() => {
-  //     r();
-  //   }, Math.floor(Math.random() * 1000 * 60 * 20))
-  // })
-  await task();
+  await new Promise((r) => {
+    setTimeout(() => {
+      r();
+    }, Math.floor(Math.random() * 1000 * 60 * 10))
+  })
+  try {
+    await task();
+  } catch(e) {
+    axios.post(`https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${process.env.QWKEY}`, {
+      msgtype: 'text',
+      text: {
+        content: `${process.env.USERNAME} 今日打卡失败 原因为${JSON.stringify(e)}`
+      }
+    }).then(() => {
+      console.log('推送成功')
+    }).catch((e) => {
+      console.log('推送失败', JSON.stringify(e))
+    })
+  }
   axios.post(`https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${process.env.QWKEY}`, {
     msgtype: 'text',
     text: {
