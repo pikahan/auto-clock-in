@@ -35,7 +35,7 @@ jobs:
 
       - name: main
         env:
-          SCKEY: ${{ secrets.QWKEY }}
+          QWKEY: ${{ secrets.QWKEY }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
         run: |
