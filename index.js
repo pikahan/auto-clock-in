@@ -70,13 +70,12 @@ const task = async () => {
 }
 
 (async () => {
-  const res = await task();
-  console.log(res);
-  const SCKEY = process.env.SCKEY;
+  await task();
   if (SCKEY) {
-    axios.get(`https://sc.ftqq.com/${SCKEY}.send`, {
-      params: {
-        text: res,
+    axios.post(`https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${process.env.QWKEY}`, {
+      msgtype: 'text',
+      text: {
+        content: '今日打卡成功'
       }
     });
   }
