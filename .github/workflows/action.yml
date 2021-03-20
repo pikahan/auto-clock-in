@@ -2,7 +2,7 @@ name: 'ZUCC'
 
 on:
   schedule:
-    - cron: '0 1 * * *'
+    - cron: '0 2 * * *'
   workflow_dispatch:
 
 jobs:
@@ -35,8 +35,8 @@ jobs:
 
       - name: main
         env:
-          SCKEY: ${{ secrets.SCKEY }}
-          USERNAME: ${{ secrets.username }}
-          PASSWORD: ${{ secrets.password }}
+          SCKEY: ${{ secrets.QWKEY }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         run: |
           node ./index.js

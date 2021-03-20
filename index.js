@@ -5,15 +5,9 @@ const userInfo = {
   username: process.env.USERNAME,
   password: process.env.PASSWORD
 };
-console.log('开始给 ' + userInfo.username + ' 打卡');
 const task = async () => {
   const browser = await puppeteer.launch({headless: true, args:['--no-sandbox']});
   const page = await browser.newPage();
-  await new Promise((r) => {
-    setTimeout(() => {
-      r();
-    }, Math.floor(Math.random() * 1000 * 60 * 20))
-  })
   await page.emulate(iPhone);
   await page.goto('http://yqdj.zucc.edu.cn/feiyan_api/h5/html/daka/daka.html');
 
@@ -66,17 +60,19 @@ const task = async () => {
 
   await page.click('.content-block.submit-box');
   await browser.close();
-  return ret + '打卡成功!';
 }
 
 (async () => {
+  // await new Promise((r) => {
+  //   setTimeout(() => {
+  //     r();
+  //   }, Math.floor(Math.random() * 1000 * 60 * 20))
+  // })
   await task();
-  if (SCKEY) {
-    axios.post(`https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${process.env.QWKEY}`, {
-      msgtype: 'text',
-      text: {
-        content: '今日打卡成功'
-      }
-    });
-  }
+  axios.post(`https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${process.env.QWKEY}`, {
+    msgtype: 'text',
+    text: {
+      content: '今日打卡成功'
+    }
+  });
 })();
