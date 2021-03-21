@@ -63,11 +63,6 @@ const task = async () => {
 }
 
 (async () => {
-  await new Promise((r) => {
-    setTimeout(() => {
-      r();
-    }, Math.floor(Math.random() * 1000 * 60 * 10))
-  })
   try {
     await task();
   } catch(e) {
